@@ -92,7 +92,7 @@ export class App extends Component {
       const contacts = JSON.parse(json);
 
       if (contacts) {
-        this.setState(() => ({ contacts }));
+        this.setState({ contacts });
       }
     } catch (error) {}
   }
