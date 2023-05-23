@@ -59,17 +59,6 @@ export class App extends Component {
       }));
     }
 
-    /*this.setState(prevState => ({
-      contacts: [
-        ...prevState.contacts,
-        {
-          name: name,
-          id: nanoid(),
-          number: number,
-        },
-      ],
-    }));
-  */
     form.reset();
   };
 
@@ -96,6 +85,23 @@ export class App extends Component {
       contacts: newFilteredContacts,
     });
   };
+
+  componentDidMount() {
+    try {
+      const json = localStorage.getItem('contacts');
+      const contacts = JSON.parse(json);
+
+      if (contacts) {
+        this.setState(() => ({ contacts }));
+      }
+    } catch (error) {}
+  }
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      const json = JSON.stringify(this.state.contacts);
+      localStorage.setItem('contacts', json);
+    }
+  }
 
   render() {
     return (
